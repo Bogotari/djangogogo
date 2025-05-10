@@ -1,11 +1,5 @@
 from django.shortcuts import render
 
-def index(request):
-    context = {
-        "title": "Django example",
-    }
-    return render(request, "index.html", context)
-
 def thank_you(request):
     if request.method == "POST":
         name = request.POST.get("name")
