@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 
 import os
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default='')
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-1234567890")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=True)
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -33,8 +32,8 @@ ALLOWED_HOSTS = [
 ]
 
 if 'CODESPACE_NAME' in os.environ:
-    codespace_name = config("CODESPACE_NAME")
-    codespace_domain = config("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
+    codespace_name = os.environ.get("CODESPACE_NAME")
+    codespace_domain = os.environ.get("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
     CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}']
 
 # Application definition
